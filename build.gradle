@@ -1,9 +1,12 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     ext {
         versions = [
+                'detekt': '1.20.0',
                 'jacoco': '0.8.8'
+        ]
+        libraries = [
+                'detekt': "io.gitlab.arturbosch.detekt:detekt-cli:${versions.detekt}"
         ]
     }
     ext.reportsDir = file("$buildDir/customJacocoReportDir")
@@ -14,9 +17,9 @@ buildscript {
     }
     dependencies {
         classpath 'org.jacoco:org.jacoco.core:0.8.8'
+        classpath 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.20.0'
     }
 }
-
 
 plugins {
     id 'com.android.application' version '7.4.0' apply false

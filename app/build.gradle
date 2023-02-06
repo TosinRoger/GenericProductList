@@ -5,6 +5,7 @@ plugins {
 }
 
 apply from: '../tools/jacoco/jacoco.gradle'
+apply from: '../tools/detekt/detekt.gradle'
 
 android {
     namespace 'com.tosin.genericproductlist'
