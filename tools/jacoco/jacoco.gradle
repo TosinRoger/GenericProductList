@@ -1,0 +1,113 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "${versions.jacoco}"
+}
+
+private static boolean isAndroidModule(Project project) {
+    boolean isAndroidLibrary = project.plugins.hasPlugin('com.android.library')
+    boolean isAndroidApp = project.plugins.hasPlugin('com.android.application')
+    return isAndroidLibrary || isAndroidApp
+}
+
+afterEvaluate { project ->
+    if (isAndroidModule(project)) {
+        setupAndroidReporting()
+    } else {
+        setupKotlinReporting()
+    }
+}
+
+def setupKotlinReporting() {
+    jacocoTestReport {
+        dependsOn test
+        reports {
+            csv.enabled true // change if needed
+            xml.enabled false // change if needed
+            html {
+                enabled true
+                destination file("${buildDir}/reports/jacoco/jacocoTestReport")
+            }
+        }
+        afterEvaluate {
+            classDirectories.from = files(classDirectories.files.collect {
+                fileTree(dir: it, exclude: [
+                        // dagger
+                        '**/*_MembersInjector.class',
+                        '**/Dagger*Component.class',
+                        '**/Dagger*Component$Builder.class',
+                        '**/Dagger*Subcomponent*.class',
+                        '**/*Subcomponent$Builder.class',
+                        '**/*Module_*Factory.class',
+                        '**/di/module/*',
+                        '**/*_Factory*.*',
+                        '**/*Module*.*',
+                        '**/*Dagger*.*',
+                        '**/*Hilt*.*',
+                ])
+            })
+        }
+    }
+}
+
+def setupAndroidReporting() {
+    tasks.withType(Test) {
+        jacoco.includeNoLocationClasses = true
+        jacoco.excludes = ['jdk.internal.*']
+        // see related issue https://github.com/gradle/gradle/issues/5184#issuecomment-457865951
+    }
+
+    task jacocoTestReport(type: JacocoReport, dependsOn: [':app:testDebugUnitTest']) {
+
+        reports {
+            xml.enabled false
+            html.enabled true
+            csv.enabled true
+            xml.destination file("${rootProject.projectDir}/build/jacoco/jacoco.xml")
+        }
+
+        def excludes = [
+                '**/R.class',
+                '**/R$*.class',
+                '**/BuildConfig.*',
+                '**/Manifest*.*',
+                '**/*Test*.*',
+                'android/**/*.*',
+                'androidx/**/*.*',
+                '**/*$ViewInjector*.*',
+                '**/*Dagger*.*',
+                '**/*MembersInjector*.*',
+                '**/*_Factory.*',
+                '**/*_Provide*Factory*.*',
+                '**/*_ViewBinding*.*',
+                '**/AutoValue_*.*',
+                '**/R2.class',
+                '**/R2$*.class',
+                '**/*Directions$*',
+                '**/*Directions.*',
+                '**/*Binding.*'
+        ]
+
+        def jClasses = "${project.buildDir}/intermediates/javac/debug/classes"
+        def kClasses = "${project.buildDir}/tmp/kotlin-classes/debug"
+        def javaClasses = fileTree(dir: jClasses, excludes: excludes)
+        def kotlinClasses = fileTree(dir: kClasses, excludes: excludes)
+
+        classDirectories.setFrom(files([javaClasses, kotlinClasses]))
+
+        def sourceDirs = "${project.projectDir}/src/main/java"
+
+        sourceDirectories.setFrom(files([sourceDirs]))
+        executionData.setFrom(
+                fileTree(
+                        dir: project.buildDir,
+                        includes: [
+                                'jacoco/testDebugUnitTest.exec'
+                        ]
+                )
+        )
+    }
+}
+
+// Run with
+// ./gradlew :app:jacocoTestReport

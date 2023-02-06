@@ -1,7 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'jacoco'
 }
+
+apply from: '../tools/jacoco/jacoco.gradle'
 
 android {
     namespace 'com.tosin.genericproductlist'
