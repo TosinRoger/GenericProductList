@@ -41,10 +41,13 @@ ext {
     materialVersion = '1.8.0'
     constraintlayout = '2.1.4'
     androidXAnnotations = '1.5.0'
+    swipeRefreshLayoutVersion = '1.1.0'
+    recyclerViewVersion = '1.2.1'
     retrofitVersion = '2.9.0'
 
     // Architecture Components
     navigationVersion = '2.5.3'
+    archLifecycleVersion = '2.5.1'
     // unit test
     junitVersion = '4.13.2'
 
