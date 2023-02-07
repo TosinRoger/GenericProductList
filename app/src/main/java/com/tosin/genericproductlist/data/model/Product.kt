@@ -1,8 +1,8 @@
-package com.tosin.genericproductlist.db.entities
+package com.tosin.genericproductlist.data.model
 
-import com.tosin.genericproductlist.data.factory.ObjectLocal
+import com.tosin.genericproductlist.domain.factory.ObjectUi
 
-data class ProductLocal(
+data class Product(
     val id: Int,
     val title: String,
     val description: String,
@@ -14,4 +14,4 @@ data class ProductLocal(
     val category: String,
     val thumbnail: String,
     val images: List<String>
-) : ObjectLocal()
+) : ObjectUi()

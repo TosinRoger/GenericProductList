@@ -1,14 +1,14 @@
-package com.tosin.genericproductlist.remote.utils
+package com.tosin.genericproductlist.data.utils
 
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.tosin.genericproductlist.remote.entity.ProductRemote
+import com.tosin.genericproductlist.data.database.entity.ProductLocal
 import java.io.IOException
 
 object ProviderStaticList {
 
-    fun getList(context: Context): List<ProductRemote> {
+    fun getList(context: Context): List<ProductLocal> {
         lateinit var jsonString: String
         try {
             jsonString = context.assets.open("product_list.json")
@@ -17,7 +17,7 @@ object ProviderStaticList {
         } catch (ioException: IOException) {
             throw ioException
         }
-        val listProductType = object : TypeToken<List<ProductRemote>>() {}.type
+        val listProductType = object : TypeToken<List<ProductLocal>>() {}.type
         val gson = Gson()
         return gson.fromJson(jsonString, listProductType)
     }

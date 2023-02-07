@@ -1,4 +1,4 @@
-package com.tosin.genericproductlist.data.factory
+package com.tosin.genericproductlist.domain.factory
 
 interface WrapperSync {
 
