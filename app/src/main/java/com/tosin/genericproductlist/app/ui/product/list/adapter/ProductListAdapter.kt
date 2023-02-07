@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.tosin.genericproductlist.R
-import com.tosin.genericproductlist.data.models.Product
+import com.tosin.genericproductlist.data.model.Product
 
-class ProductAdapter : PagingDataAdapter<Product, ProductViewHolder>(diffCallback) {
+class ProductListAdapter : PagingDataAdapter<Product, ProductViewHolder>(diffCallback) {
 
     companion object {
 
@@ -31,7 +31,15 @@ class ProductAdapter : PagingDataAdapter<Product, ProductViewHolder>(diffCallbac
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         getItem(position)?.let { product ->
-            println(product.title)
+
+            holder.title.text = product.title
+            holder.brand.text = product.brand
+
+            val discount = "${product.discountPercentage}%"
+            holder.discount.text = discount
+
+            val price = "$ ${product.price}"
+            holder.price.text = price
         }
     }
 }

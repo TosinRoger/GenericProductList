@@ -7,5 +7,8 @@ import com.tosin.genericproductlist.databinding.ItemProductBinding
 class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val binding = ItemProductBinding.bind(itemView)
 
-//    val title = binding.textView
+    val title = binding.textViewItemProductTitle
+    val brand = binding.textViewItemProductBrand
+    val discount = binding.textViewItemProductDiscount
+    val price = binding.textViewItemProductPrice
 }
