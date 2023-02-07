@@ -37,6 +37,7 @@ ext {
     kotlinVersion = '1.7.21'
 
     // App dependencies
+    materialVersion = '1.8.0'
     retrofitVersion = '2.9.0'
 
     // unit test

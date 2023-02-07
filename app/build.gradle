@@ -43,6 +43,7 @@ dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     // App dependencies
+    implementation "com.google.android.material:material:$materialVersion"
     implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
 
     // Architecture Components
