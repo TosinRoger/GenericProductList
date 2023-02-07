@@ -42,11 +42,18 @@ dependencies {
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
+    
     // App dependencies
     implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout"
+    implementation "androidx.annotation:annotation:$androidXAnnotations"
     implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
 
     // Architecture Components
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+
     // Dependencies for local unit tests
     testImplementation "junit:junit:$junitVersion"
 
