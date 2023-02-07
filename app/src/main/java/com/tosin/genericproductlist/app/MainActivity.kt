@@ -1,7 +1,8 @@
-package com.tosin.genericproductlist
+package com.tosin.genericproductlist.app
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.tosin.genericproductlist.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
