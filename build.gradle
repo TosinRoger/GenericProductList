@@ -38,6 +38,7 @@ ext {
 
     // App dependencies
     materialVersion = '1.8.0'
+    retrofitVersion = '2.9.0'
 
     // unit test
     junitVersion = '4.13.2'
