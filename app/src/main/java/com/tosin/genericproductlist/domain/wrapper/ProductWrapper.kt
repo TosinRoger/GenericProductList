@@ -1,13 +1,13 @@
 package com.tosin.genericproductlist.domain.wrapper
 
+import com.tosin.genericproductlist.data.database.entity.ProductLocal
+import com.tosin.genericproductlist.data.model.Product
+import com.tosin.genericproductlist.data.remote.entity.ProductRemote
 import com.tosin.genericproductlist.domain.factory.ObjectLocal
 import com.tosin.genericproductlist.domain.factory.ObjectRemote
 import com.tosin.genericproductlist.domain.factory.ObjectUi
 import com.tosin.genericproductlist.domain.factory.WrapperSync
 import com.tosin.genericproductlist.domain.factory.WrapperUI
-import com.tosin.genericproductlist.data.model.Product
-import com.tosin.genericproductlist.data.database.entity.ProductLocal
-import com.tosin.genericproductlist.data.remote.entity.ProductRemote
 
 class ProductWrapper : WrapperUI, WrapperSync {
 
