@@ -1,4 +1,4 @@
-package com.tosin.genericproductlist.app.ui
+package com.tosin.genericproductlist.app.ui.product.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
