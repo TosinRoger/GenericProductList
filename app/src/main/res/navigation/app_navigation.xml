@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/productListFragment"
-        android:name="com.tosin.genericproductlist.app.ui.ProductListFragment"
+        android:name="com.tosin.genericproductlist.app.ui.product.list.ProductListFragment"
         android:label="ProductListFragment"
         tools:layout="@layout/fragment_product_list" />
 </navigation>

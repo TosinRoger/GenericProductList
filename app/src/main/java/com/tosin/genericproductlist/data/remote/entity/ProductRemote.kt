@@ -1,4 +1,6 @@
-package com.tosin.genericproductlist.remote.entity
+package com.tosin.genericproductlist.data.remote.entity
+
+import com.tosin.genericproductlist.domain.factory.ObjectRemote
 
 data class ProductRemote(
     val id: Int,
@@ -12,4 +14,4 @@ data class ProductRemote(
     val category: String,
     val thumbnail: String,
     val images: List<String>
-)
+) : ObjectRemote()
