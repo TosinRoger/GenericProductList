@@ -31,7 +31,7 @@ class ProductListAdapter : PagingDataAdapter<Product, ProductViewHolder>(diffCal
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         getItem(position)?.let { product ->
-
+            holder.code.text = product.id.toString()
             holder.title.text = product.title
             holder.brand.text = product.brand
 

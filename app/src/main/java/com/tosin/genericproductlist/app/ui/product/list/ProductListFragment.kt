@@ -1,22 +1,28 @@
 package com.tosin.genericproductlist.app.ui.product.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tosin.genericproductlist.R
+import com.tosin.genericproductlist.app.ui.UiProductState
+import com.tosin.genericproductlist.app.ui.UiState
 import com.tosin.genericproductlist.app.ui.interfaces.ImplementMethodsOnScreen
 import com.tosin.genericproductlist.app.ui.product.list.adapter.ProductListAdapter
 import com.tosin.genericproductlist.app.ui.viewModelFactory
 import com.tosin.genericproductlist.databinding.FragmentProductListBinding
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
@@ -65,8 +71,13 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
             val showLoading = loadState.source.refresh is LoadState.Loading
 
             // here only hide loading. The show is in launch search/load
-            showLoading(showLoading)
-//            showLayoutEmptyList(showList && mAdapter.itemCount == 0)
+            if (showLoading) {
+                showUiState(UiProductState(UiState.LOADING))
+            } else if (showList && mAdapter.itemCount == 0) {
+                showUiState(UiProductState(UiState.EMPTY_LIST))
+            } else if (showList && mAdapter.itemCount > 0) {
+                showUiState(UiProductState(UiState.DONE))
+            }
         }
 
         val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
@@ -96,13 +107,19 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
                 )
             }
         )[ProductListViewModel::class.java]
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collectLatest { uiState ->
+                    showUiState(uiState)
+                }
+            }
+        }
     }
 
     private fun setUpJob() {
         job?.cancel()
         job = lifecycleScope.launch {
-            showLoading(true)
-
             viewModel.loadProducts().collectLatest {
                 mAdapter.submitData(it)
             }
@@ -121,7 +138,25 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
         }
     }
 
-    private fun showLoading(show: Boolean) {
-        _binding?.refreshProductList?.isRefreshing = show
+    private fun showUiState(uiState: UiProductState) {
+        println(uiState.uiState.name)
+        Log.d("UiState", uiState.uiState.name)
+        when (uiState.uiState) {
+            UiState.DONE -> {
+                _binding?.refreshProductList?.isRefreshing = false
+            }
+            UiState.EMPTY_LIST -> {
+                _binding?.refreshProductList?.isRefreshing = false
+            }
+            UiState.EMPTY_SEARCH -> {
+                _binding?.refreshProductList?.isRefreshing = false
+            }
+            UiState.ERROR -> {
+                _binding?.refreshProductList?.isRefreshing = false
+            }
+            UiState.LOADING -> {
+                _binding?.refreshProductList?.isRefreshing = true
+            }
+        }
     }
 }
