@@ -1,6 +1,6 @@
 package com.tosin.genericproductlist.app.ui.state
 
-import com.tosin.genericproductlist.data.model.Product
+import com.tosin.genericproductlist.domain.model.Product
 
 /**
  * State
