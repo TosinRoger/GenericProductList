@@ -1,7 +1,7 @@
 package com.tosin.genericproductlist.domain.wrapper
 
 import com.tosin.genericproductlist.data.database.entity.ProductLocal
-import com.tosin.genericproductlist.data.model.Product
+import com.tosin.genericproductlist.domain.model.Product
 import com.tosin.genericproductlist.data.remote.entity.ProductRemote
 import com.tosin.genericproductlist.domain.factory.entity.ProductFactory
 import com.tosin.genericproductlist.domain.factory.entity.ProductLocalFactory

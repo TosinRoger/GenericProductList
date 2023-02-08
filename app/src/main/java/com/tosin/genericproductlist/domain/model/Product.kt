@@ -1,4 +1,4 @@
-package com.tosin.genericproductlist.data.model
+package com.tosin.genericproductlist.domain.model
 
 import com.tosin.genericproductlist.domain.factory.ObjectUi
 

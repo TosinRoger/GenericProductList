@@ -3,7 +3,7 @@ package com.tosin.genericproductlist.domain.paging.source
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.tosin.genericproductlist.data.database.interfaces.ProductDao
-import com.tosin.genericproductlist.data.model.Product
+import com.tosin.genericproductlist.domain.model.Product
 import com.tosin.genericproductlist.domain.wrapper.ProductWrapper
 
 class ProductPagingSource(

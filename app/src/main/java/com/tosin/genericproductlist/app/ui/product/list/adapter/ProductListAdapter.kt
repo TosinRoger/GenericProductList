@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.tosin.genericproductlist.R
-import com.tosin.genericproductlist.data.model.Product
+import com.tosin.genericproductlist.domain.model.Product
 
 class ProductListAdapter : PagingDataAdapter<Product, ProductViewHolder>(diffCallback) {
 
