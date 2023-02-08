@@ -7,21 +7,28 @@ import com.tosin.genericproductlist.data.utils.ProviderStaticList
 
 class DoQueriesToLoadProduct : ProductDao {
 
+    companion object {
+        private const val PAGE_ONE = 0
+        private const val PAGE_TWO = 1
+        private const val PAGE_THREE = 2
+        private const val PAGE_FOUR = 3
+    }
+
     override fun fetchProduct(page: Int): List<ProductLocal> {
         return when (page) {
-            0 -> ProviderStaticList.getList(
+            PAGE_ONE -> ProviderStaticList.getList(
                 AppApplication.applicationContext(),
                 "product_list.json"
             )
-            1 -> ProviderStaticList.getList(
+            PAGE_TWO -> ProviderStaticList.getList(
                 AppApplication.applicationContext(),
                 "product_list_01.json"
             )
-            2 -> ProviderStaticList.getList(
+            PAGE_THREE -> ProviderStaticList.getList(
                 AppApplication.applicationContext(),
                 "product_list_02.json"
             )
-            3 -> ProviderStaticList.getList(
+            PAGE_FOUR -> ProviderStaticList.getList(
                 AppApplication.applicationContext(),
                 "product_list_03.json"
             )
