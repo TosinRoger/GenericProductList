@@ -80,6 +80,7 @@ dependencies {
     // used in after each test
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
+    testImplementation "androidx.paging:paging-common:$pagingVersion"
 
     // AndroidX Test - Instrumented testing
     androidTestImplementation "androidx.test.ext:junit:$androidXTestExtKotlinRunnerVersion"

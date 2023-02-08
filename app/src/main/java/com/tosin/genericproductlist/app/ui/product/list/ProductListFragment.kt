@@ -15,14 +15,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tosin.genericproductlist.R
-import com.tosin.genericproductlist.app.ui.UiProductState
-import com.tosin.genericproductlist.app.ui.UiState
 import com.tosin.genericproductlist.app.ui.interfaces.ImplementMethodsOnScreen
 import com.tosin.genericproductlist.app.ui.product.list.adapter.ProductListAdapter
+import com.tosin.genericproductlist.app.ui.state.UiProductState
+import com.tosin.genericproductlist.app.ui.state.UiState
 import com.tosin.genericproductlist.app.ui.viewModelFactory
+import com.tosin.genericproductlist.data.database.datasource.DoQueriesToLoadProduct
 import com.tosin.genericproductlist.databinding.FragmentProductListBinding
+import com.tosin.genericproductlist.domain.data.ProductRepository
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
@@ -103,7 +104,9 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
             viewModelStore,
             viewModelFactory {
                 ProductListViewModel(
-                    ProductListDataSource()
+                    ProductRepository(
+                        DoQueriesToLoadProduct()
+                    )
                 )
             }
         )[ProductListViewModel::class.java]

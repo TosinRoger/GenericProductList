@@ -3,11 +3,10 @@ package com.tosin.genericproductlist.app.ui.product.list
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
-import com.tosin.genericproductlist.data.database.datasource.ProductDataSource
+import com.tosin.genericproductlist.data.database.datasource.DoQueriesToLoadProduct
 import com.tosin.genericproductlist.data.database.entity.ProductLocal
-import com.tosin.genericproductlist.data.database.source.ProductPagingSource
-import com.tosin.genericproductlist.domain.factory.entity.ProductLocalFactory
-import com.tosin.genericproductlist.domain.wrapper.ProductWrapper
+import com.tosin.genericproductlist.domain.data.ProductRepository
+import com.tosin.genericproductlist.domain.paging.source.ProductPagingSource
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
 import io.mockk.clearStaticMockk
@@ -28,16 +27,16 @@ class ProductListViewModelTest {
     private lateinit var productPagingSource: ProductPagingSource
 
     @MockK
-    private lateinit var dataSource: ProductListDataSource
+    private lateinit var repository: ProductRepository
 
     @MockK
-    private lateinit var pagingDataSource: ProductDataSource
+    private lateinit var pagingDataSource: DoQueriesToLoadProduct
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
 
-        viewModel = ProductListViewModel(dataSource)
+        viewModel = ProductListViewModel(repository)
         productPagingSource = ProductPagingSource(pagingDataSource)
     }
 
@@ -120,7 +119,7 @@ class ProductListViewModelTest {
         )
 
         coEvery {
-            dataSource.fetchProductList()
+            repository.fetchProductList()
         } returns pager.flow
     }
 }

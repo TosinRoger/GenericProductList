@@ -1,4 +1,4 @@
-package com.tosin.genericproductlist.data.database.source
+package com.tosin.genericproductlist.domain.paging.source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -10,7 +10,6 @@ class ProductPagingSource(
     private val productLocalRepo: ProductDao
 ) : PagingSource<Int, Product>() {
     companion object {
-        const val PAGE_SIZE = 10
         private const val STARTING_PAGE_INDEX = 0
     }
 

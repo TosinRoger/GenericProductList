@@ -1,4 +1,4 @@
-package com.tosin.genericproductlist.app.ui
+package com.tosin.genericproductlist.app.ui.state
 
 import com.tosin.genericproductlist.data.model.Product
 
