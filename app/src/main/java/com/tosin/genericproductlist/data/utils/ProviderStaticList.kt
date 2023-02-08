@@ -8,10 +8,10 @@ import java.io.IOException
 
 object ProviderStaticList {
 
-    fun getList(context: Context): List<ProductLocal> {
+    fun getList(context: Context, fileName: String): List<ProductLocal> {
         lateinit var jsonString: String
         try {
-            jsonString = context.assets.open("product_list.json")
+            jsonString = context.assets.open(fileName)
                 .bufferedReader()
                 .use { it.readText() }
         } catch (ioException: IOException) {

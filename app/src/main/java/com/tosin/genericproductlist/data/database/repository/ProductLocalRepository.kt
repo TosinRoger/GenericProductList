@@ -6,7 +6,7 @@ import com.tosin.genericproductlist.data.utils.ProviderStaticList
 
 class ProductLocalRepository {
 
-    fun getList(): List<ProductLocal> {
-        return ProviderStaticList.getList(AppApplication.applicationContext())
+    fun getList(fileName: String): List<ProductLocal> {
+        return ProviderStaticList.getList(AppApplication.applicationContext(), fileName)
     }
 }
