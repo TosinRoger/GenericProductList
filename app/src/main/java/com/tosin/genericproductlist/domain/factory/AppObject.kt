@@ -1,7 +1,7 @@
 package com.tosin.genericproductlist.domain.factory
 
-abstract class ObjectLocal
+interface ObjectLocal
 
-abstract class ObjectRemote
+interface ObjectRemote
 
-abstract class ObjectUi
+interface ObjectUi

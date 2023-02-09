@@ -14,4 +14,4 @@ data class ProductRemote(
     val category: String,
     val thumbnail: String,
     val images: List<String>
-) : ObjectRemote()
+) : ObjectRemote
