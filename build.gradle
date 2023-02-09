@@ -22,7 +22,39 @@ buildscript {
 }
 
 plugins {
-    id 'com.android.application' version '7.4.0' apply false
-    id 'com.android.library' version '7.4.0' apply false
-    id 'org.jetbrains.kotlin.android' version '1.7.21' apply false
+    id 'com.android.application' version '7.4.1' apply false
+    id 'com.android.library' version '7.4.1' apply false
+    id 'org.jetbrains.kotlin.android' version '1.8.10' apply false
+}
+
+ext {
+    // Sdk and tools
+    minSdkVersion = 24
+    targetSdkVersion = 33
+    compileSdkVersion = 33
+
+    // kotlin
+    kotlinVersion = '1.8.10'
+    fragmentKtxVersion = '1.5.5'
+
+    // App dependencies
+    materialVersion = '1.8.0'
+    constraintlayout = '2.1.4'
+    androidXAnnotations = '1.5.0'
+    swipeRefreshLayoutVersion = '1.1.0'
+    recyclerViewVersion = '1.2.1'
+    pagingVersion = '3.1.1'
+    retrofitVersion = '2.9.0'
+
+    // Architecture Components
+    navigationVersion = '2.5.3'
+    archLifecycleVersion = '2.5.1'
+
+    // unit test
+    junitVersion = '4.13.2'
+    mockkVersion = '1.13.3'
+
+    // Instrumented testing
+    androidXTestExtKotlinRunnerVersion = '1.1.5'
+    espressoVersion = '3.5.1'
 }

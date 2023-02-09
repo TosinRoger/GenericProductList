@@ -1,7 +1,7 @@
 # GenericProductList
 
-![Android CI](https://github.com/TosinRoger/GenericProductList/actions/workflows/androidCI.yml/badge.svg?branch=main)
-[![Coverage](.github/badges/jacoco.svg)](https://github.com/TosinRoger/GenericProductList/actions/workflows/androidCI.yml)
+![Android CI](https://github.com/TosinRoger/GenericProductList/actions/workflows/androidCI_main.yml/badge.svg?branch=main)
+[![Coverage](.github/badges/jacoco.svg)](https://github.com/TosinRoger/GenericProductList/actions/workflows/androidCI_main.yml)
 
 ## Descrição em Português
 
