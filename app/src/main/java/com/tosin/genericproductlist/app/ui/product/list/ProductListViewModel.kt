@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import com.tosin.genericproductlist.app.ui.state.UiProductState
 import com.tosin.genericproductlist.app.ui.state.UiState
-import com.tosin.genericproductlist.domain.model.Product
 import com.tosin.genericproductlist.domain.data.ProductRepository
+import com.tosin.genericproductlist.domain.model.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Job
