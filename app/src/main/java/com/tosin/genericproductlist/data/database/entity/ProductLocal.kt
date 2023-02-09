@@ -14,4 +14,4 @@ data class ProductLocal(
     val category: String,
     val thumbnail: String,
     val images: List<String>
-) : ObjectLocal()
+) : ObjectLocal

@@ -14,4 +14,4 @@ data class Product(
     val category: String,
     val thumbnail: String,
     val images: List<String>
-) : ObjectUi()
+) : ObjectUi

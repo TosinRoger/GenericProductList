@@ -15,7 +15,7 @@ object ProviderStaticList {
                 .bufferedReader()
                 .use { it.readText() }
         } catch (ioException: IOException) {
-            throw ioException
+            println(ioException.message)
         }
         val listProductType = object : TypeToken<List<ProductLocal>>() {}.type
         val gson = Gson()

@@ -1,11 +1,12 @@
 package com.tosin.genericproductlist.domain.wrapper
 
 import com.tosin.genericproductlist.data.database.entity.ProductLocal
-import com.tosin.genericproductlist.domain.model.Product
 import com.tosin.genericproductlist.data.remote.entity.ProductRemote
 import com.tosin.genericproductlist.domain.factory.entity.ProductFactory
 import com.tosin.genericproductlist.domain.factory.entity.ProductLocalFactory
 import com.tosin.genericproductlist.domain.factory.entity.ProductRemoteFactory
+import com.tosin.genericproductlist.domain.model.Product
+import io.mockk.MockKAnnotations
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,6 +18,7 @@ class ProductWrapperTest {
 
     @Before
     fun setUp() {
+        MockKAnnotations.init(this)
     }
 
     @Test
