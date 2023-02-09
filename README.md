@@ -2,6 +2,7 @@
 
 ![Android CI](https://github.com/TosinRoger/GenericProductList/actions/workflows/androidCI_main.yml/badge.svg?branch=main)
 [![Coverage](.github/badges/jacoco.svg)](https://github.com/TosinRoger/GenericProductList/actions/workflows/androidCI_main.yml)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/TosinRoger/GenericProductList)
 
 ## Descrição em Português
 
