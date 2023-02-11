@@ -10,12 +10,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tosin.genericproductlist.R
+import com.tosin.genericproductlist.app.delegate.onItemClicked
 import com.tosin.genericproductlist.app.ui.interfaces.ImplementMethodsOnScreen
+import com.tosin.genericproductlist.app.ui.product.detail.ProductDetailFragment
 import com.tosin.genericproductlist.app.ui.product.list.adapter.ProductListAdapter
 import com.tosin.genericproductlist.app.ui.state.UiProductState
 import com.tosin.genericproductlist.app.ui.state.UiState
@@ -23,6 +26,7 @@ import com.tosin.genericproductlist.app.ui.viewModelFactory
 import com.tosin.genericproductlist.data.database.datasource.DoQueriesToLoadProduct
 import com.tosin.genericproductlist.databinding.FragmentProductListBinding
 import com.tosin.genericproductlist.domain.data.ProductRepository
+import com.tosin.genericproductlist.domain.model.Product
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
@@ -63,7 +67,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
     }
 
     override fun setUpView() {
-        mAdapter = ProductListAdapter()
+        mAdapter = ProductListAdapter(delegate)
 
         mAdapter.addLoadStateListener { loadState ->
             // Only show the list if refresh succeeds.
@@ -116,6 +120,15 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
                 viewModel.uiState.collectLatest { uiState ->
                     showUiState(uiState)
                 }
+            }
+        }
+    }
+
+    private val delegate = object : onItemClicked<Product> {
+        override fun invoke(itemClicked: Product) {
+            if (_binding?.slidingPaneLayout?.isSlideable == true && _binding?.slidingPaneLayout?.isOpen == false) {
+//ProductListFragment
+                findNavController().navigate(R.id.productDetailFragment)
             }
         }
     }

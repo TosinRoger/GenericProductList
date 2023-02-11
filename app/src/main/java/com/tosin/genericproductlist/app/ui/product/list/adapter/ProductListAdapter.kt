@@ -5,9 +5,11 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.tosin.genericproductlist.R
+import com.tosin.genericproductlist.app.delegate.onItemClicked
 import com.tosin.genericproductlist.domain.model.Product
 
-class ProductListAdapter : PagingDataAdapter<Product, ProductViewHolder>(diffCallback) {
+class ProductListAdapter(private val delegate: onItemClicked<Product>) :
+    PagingDataAdapter<Product, ProductViewHolder>(diffCallback) {
 
     companion object {
 
@@ -40,6 +42,10 @@ class ProductListAdapter : PagingDataAdapter<Product, ProductViewHolder>(diffCal
 
             val price = "$ ${product.price}"
             holder.price.text = price
+
+            holder.itemView.setOnClickListener {
+                delegate(product)
+            }
         }
     }
 }

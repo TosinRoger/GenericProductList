@@ -44,6 +44,7 @@ ext {
     swipeRefreshLayoutVersion = '1.1.0'
     recyclerViewVersion = '1.2.1'
     pagingVersion = '3.1.1'
+    slidingPaneLayoutVersion = '1.2.0'
     retrofitVersion = '2.9.0'
 
     // Architecture Components
