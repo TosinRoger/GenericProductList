@@ -50,10 +50,11 @@ ext {
     // Architecture Components
     navigationVersion = '2.5.3'
     archLifecycleVersion = '2.5.1'
+    datastoreVersion = '1.0.0'
 
     // unit test
     junitVersion = '4.13.2'
-    mockkVersion = '1.13.3'
+    mockkVersion = '1.13.4'
 
     // Instrumented testing
     androidXTestExtKotlinRunnerVersion = '1.1.5'

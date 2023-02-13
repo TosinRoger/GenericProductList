@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.datastore.preferences.core.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -19,10 +20,12 @@ import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.tosin.genericproductlist.R
 import com.tosin.genericproductlist.app.delegate.onItemClicked
 import com.tosin.genericproductlist.app.ui.interfaces.ImplementMethodsOnScreen
+import com.tosin.genericproductlist.app.ui.product.detail.ProductDetailFragment
 import com.tosin.genericproductlist.app.ui.product.list.adapter.ProductListAdapter
 import com.tosin.genericproductlist.app.ui.state.UiProductState
 import com.tosin.genericproductlist.app.ui.state.UiState
 import com.tosin.genericproductlist.app.ui.viewModelFactory
+import com.tosin.genericproductlist.data.dataStore
 import com.tosin.genericproductlist.data.database.datasource.DoQueriesToLoadProduct
 import com.tosin.genericproductlist.databinding.FragmentProductListBinding
 import com.tosin.genericproductlist.domain.data.ProductRepository
@@ -39,8 +42,8 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
     private val binding get() = _binding!!
 
     private lateinit var viewModel: ProductListViewModel
-    private var job: Job? = null
     private lateinit var mAdapter: ProductListAdapter
+    private var job: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -135,7 +138,13 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
 
     private val delegate = object : onItemClicked<Product> {
         override fun invoke(itemClicked: Product) {
-            _binding?.slidingPaneLayout?.openPane()
+            lifecycleScope.launch {
+                requireContext().dataStore.edit { settings ->
+                    val currentCounterValue = settings[ProductDetailFragment.SAVE_PRODUCT_ID] ?: 0
+                    settings[ProductDetailFragment.SAVE_PRODUCT_ID] = currentCounterValue + 1
+                }
+                _binding?.slidingPaneLayout?.openPane()
+            }
         }
     }
 
