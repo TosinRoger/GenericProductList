@@ -8,11 +8,12 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.tosin.genericproductlist.AppApplication
 import com.tosin.genericproductlist.R
 import com.tosin.genericproductlist.data.dataStore
-import com.tosin.genericproductlist.data.database.datasource.DoQueriesToLoadProduct
 import com.tosin.genericproductlist.databinding.FragmentProductDetailBinding
 import com.tosin.genericproductlist.domain.data.ProductRepository
+import com.tosin.genericproductlist.domain.model.Product
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -63,8 +64,9 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
      */
     private fun loadProduct(productId: Int) {
         val productRepository = ProductRepository(
-            DoQueriesToLoadProduct()
+            (requireActivity().application as AppApplication).database.productDao()
         )
+
         val product = productRepository.findById(productId)
 
         product?.let {

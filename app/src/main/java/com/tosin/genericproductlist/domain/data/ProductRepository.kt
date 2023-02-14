@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 class ProductRepository(private val database: ProductDao) {
 
     fun fetchProductList(): Flow<PagingData<Product>> {
+//        return database.fetchProduct(0)
         val pagingSourceFactory = ProductPagingSource(database)
         return FactoryPagingData.fetchList(pagingSourceFactory)
     }

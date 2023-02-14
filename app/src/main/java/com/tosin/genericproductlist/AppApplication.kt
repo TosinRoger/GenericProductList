@@ -2,6 +2,7 @@ package com.tosin.genericproductlist
 
 import android.app.Application
 import android.content.Context
+import com.tosin.genericproductlist.data.database.datasource.AppDataBase
 
 class AppApplication : Application() {
 
@@ -16,6 +17,8 @@ class AppApplication : Application() {
             return instance!!.applicationContext
         }
     }
+
+    val database: AppDataBase by lazy { AppDataBase.getDatabase(this) }
 
     override fun onCreate() {
         super.onCreate()

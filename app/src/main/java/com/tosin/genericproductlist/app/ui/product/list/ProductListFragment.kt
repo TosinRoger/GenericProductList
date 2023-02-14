@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
+import com.tosin.genericproductlist.AppApplication
 import com.tosin.genericproductlist.R
 import com.tosin.genericproductlist.app.delegate.onItemClicked
 import com.tosin.genericproductlist.app.ui.interfaces.ImplementMethodsOnScreen
@@ -121,7 +122,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
             viewModelFactory {
                 ProductListViewModel(
                     ProductRepository(
-                        DoQueriesToLoadProduct()
+                        (requireActivity().application as AppApplication).database.productDao()
                     )
                 )
             }

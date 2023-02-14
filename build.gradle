@@ -53,6 +53,9 @@ ext {
     archLifecycleVersion = '2.5.1'
     datastoreVersion = '1.0.0'
 
+    // DB
+    roomVersion = '2.5.0'
+
     // unit test
     junitVersion = '4.13.2'
     mockkVersion = '1.13.4'
