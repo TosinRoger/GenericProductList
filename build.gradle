@@ -30,8 +30,8 @@ plugins {
 ext {
     // Sdk and tools
     minSdkVersion = 24
-    targetSdkVersion = 31
-    compileSdkVersion = 31
+    targetSdkVersion = 33
+    compileSdkVersion = 33
 
     // kotlin
     kotlinVersion = '1.8.10'
