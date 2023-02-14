@@ -6,10 +6,12 @@ import androidx.paging.PagingState
 import com.tosin.genericproductlist.data.database.interfaces.ProductDao
 import com.tosin.genericproductlist.domain.model.Product
 import com.tosin.genericproductlist.domain.wrapper.ProductWrapper
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 
 class ProductPagingSource(
-    private val productLocalRepo: ProductDao
+//    private val productLocalRepo: ProductDao
+    private val listProduct: List<Product>
 ) : PagingSource<Int, Product>() {
     companion object {
         private const val STARTING_PAGE_INDEX = 0
@@ -19,36 +21,36 @@ class ProductPagingSource(
         val position = params.key ?: STARTING_PAGE_INDEX
         val wrapper = ProductWrapper()
 
-        val responseProductList = mutableListOf<Product>()
+//        val responseProductList = mutableListOf<Product>()
 //        productLocalRepo
 //            .fetchProduct()
 //            .collectLatest { productLocalList ->
 //                val productList = productLocalList.map { wrapper.toUi(it) as Product }
 //                responseProductList.addAll(productList)
 //            }
-
-        val churros = productLocalRepo
-            .fetchProduct2()
-            .value
-
-        churros?.map { productLocal ->
-            val product = wrapper.toUi(productLocal) as Product
-            responseProductList.add(product)
-        }
+//
+//        val churros = productLocalRepo
+//            .fetchProduct2()
+//            .value
+//
+//        churros?.map { productLocal ->
+//            val product = wrapper.toUi(productLocal) as Product
+//            responseProductList.add(product)
+//        }
 
         println("==========")
         println("==========")
         println("==========")
         println("==========")
-        println("list size -> ${responseProductList.size}")
+        println("list size -> ${listProduct.size}")
 
-        val nextKey = if (responseProductList.isEmpty()) {
+        val nextKey = if (listProduct.isEmpty()) {
             null
         } else {
             position + 1
         }
         return LoadResult.Page(
-            data = responseProductList,
+            data = listProduct,
             prevKey = if (position == STARTING_PAGE_INDEX) null else position - 1,
             nextKey = nextKey
         )

@@ -16,6 +16,9 @@ interface ProductDao {
     @Query("SELECT * FROM product")
     fun fetchProduct2(): LiveData<List<ProductLocal>>
 
+    @Query("SELECT * FROM product")
+    fun fetchProduct3(): List<ProductLocal>
+
     @Insert
     fun insertProduct(productLocal: ProductLocal)
 
