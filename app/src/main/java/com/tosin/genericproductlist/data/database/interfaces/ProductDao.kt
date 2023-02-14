@@ -5,4 +5,6 @@ import com.tosin.genericproductlist.data.database.entity.ProductLocal
 interface ProductDao {
 
     fun fetchProduct(page: Int): List<ProductLocal>
+
+    fun findById(productId: Int): ProductLocal?
 }

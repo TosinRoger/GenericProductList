@@ -44,15 +44,18 @@ ext {
     swipeRefreshLayoutVersion = '1.1.0'
     recyclerViewVersion = '1.2.1'
     pagingVersion = '3.1.1'
+    slidingPaneLayoutVersion = '1.2.0'
     retrofitVersion = '2.9.0'
+    glideVersion = '4.14.2'
 
     // Architecture Components
     navigationVersion = '2.5.3'
     archLifecycleVersion = '2.5.1'
+    datastoreVersion = '1.0.0'
 
     // unit test
     junitVersion = '4.13.2'
-    mockkVersion = '1.13.3'
+    mockkVersion = '1.13.4'
 
     // Instrumented testing
     androidXTestExtKotlinRunnerVersion = '1.1.5'

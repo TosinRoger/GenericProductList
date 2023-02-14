@@ -35,4 +35,22 @@ class DoQueriesToLoadProduct : ProductDao {
             else -> listOf()
         }
     }
+
+    override fun findById(productId: Int): ProductLocal? {
+        val products = mutableListOf<ProductLocal>()
+        for (index in PAGE_ONE..PAGE_FOUR) {
+            val aux = fetchProduct(index)
+            products.addAll(aux)
+        }
+
+        var product: ProductLocal? = null
+
+        products.forEach { productLocal ->
+            if (productId == productLocal.id) {
+                product = productLocal
+            }
+        }
+
+        return product
+    }
 }
