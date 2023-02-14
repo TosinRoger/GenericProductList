@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun addFirstDataInDB() {
-        val aux = (application as AppApplication).database.productDao().fetchProduct()
+        val aux = (application as AppApplication).database.productDao().fetchProductFromJson()
 
         val list = aux.first()
 
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             // Product from JSON
             val json = DoQueriesToLoadProduct()
 
-            for (index in DoQueriesToLoadProduct.PAGE_ONE ..DoQueriesToLoadProduct.PAGE_FOUR) {
+            for (index in DoQueriesToLoadProduct.PAGE_ONE..DoQueriesToLoadProduct.PAGE_FOUR) {
                 json.fetchProduct(index)
                     .forEach { productLocal ->
                         (application as AppApplication)

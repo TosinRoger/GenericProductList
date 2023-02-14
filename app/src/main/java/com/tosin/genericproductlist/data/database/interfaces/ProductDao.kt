@@ -1,6 +1,5 @@
 package com.tosin.genericproductlist.data.database.interfaces
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -11,13 +10,10 @@ import kotlinx.coroutines.flow.Flow
 interface ProductDao {
 
     @Query("SELECT * FROM product")
-    fun fetchProduct(): Flow<List<ProductLocal>>
+    fun fetchProductFromJson(): Flow<List<ProductLocal>>
 
     @Query("SELECT * FROM product")
-    fun fetchProduct2(): LiveData<List<ProductLocal>>
-
-    @Query("SELECT * FROM product")
-    fun fetchProduct3(): List<ProductLocal>
+    fun getAllProducts(): List<ProductLocal>
 
     @Insert
     fun insertProduct(productLocal: ProductLocal)
