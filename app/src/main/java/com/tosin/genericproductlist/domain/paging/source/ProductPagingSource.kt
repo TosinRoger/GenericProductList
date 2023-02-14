@@ -1,16 +1,10 @@
 package com.tosin.genericproductlist.domain.paging.source
 
-import androidx.lifecycle.map
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.tosin.genericproductlist.data.database.interfaces.ProductDao
 import com.tosin.genericproductlist.domain.model.Product
-import com.tosin.genericproductlist.domain.wrapper.ProductWrapper
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
 
 class ProductPagingSource(
-//    private val productLocalRepo: ProductDao
     private val listProduct: List<Product>
 ) : PagingSource<Int, Product>() {
     companion object {
@@ -19,30 +13,6 @@ class ProductPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         val position = params.key ?: STARTING_PAGE_INDEX
-        val wrapper = ProductWrapper()
-
-//        val responseProductList = mutableListOf<Product>()
-//        productLocalRepo
-//            .fetchProduct()
-//            .collectLatest { productLocalList ->
-//                val productList = productLocalList.map { wrapper.toUi(it) as Product }
-//                responseProductList.addAll(productList)
-//            }
-//
-//        val churros = productLocalRepo
-//            .fetchProduct2()
-//            .value
-//
-//        churros?.map { productLocal ->
-//            val product = wrapper.toUi(productLocal) as Product
-//            responseProductList.add(product)
-//        }
-
-        println("==========")
-        println("==========")
-        println("==========")
-        println("==========")
-        println("list size -> ${listProduct.size}")
 
         val nextKey = if (listProduct.isEmpty()) {
             null

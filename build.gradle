@@ -52,6 +52,8 @@ ext {
     navigationVersion = '2.5.3'
     archLifecycleVersion = '2.5.1'
     datastoreVersion = '1.0.0'
+    coroutinesVersion = '1.6.4'
+    archCoreTestingVersion = '2.1.0'
 
     // DB
     roomVersion = '2.5.0'

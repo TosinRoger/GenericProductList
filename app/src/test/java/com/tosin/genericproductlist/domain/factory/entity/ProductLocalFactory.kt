@@ -16,8 +16,7 @@ object ProductLocalFactory {
             DataFactory.randomInt(),
             DataFactory.randomString(),
             DataFactory.randomString(),
-            DataFactory.randomString(),
-            listOf(DataFactory.randomString())
+            DataFactory.randomString()
         )
     }
 }

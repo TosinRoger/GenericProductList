@@ -1,7 +1,7 @@
 package com.tosin.genericproductlist.domain.factory.entity
 
-import com.tosin.genericproductlist.domain.model.Product
 import com.tosin.genericproductlist.domain.factory.utils.DataFactory
+import com.tosin.genericproductlist.domain.model.Product
 
 object ProductFactory {
 
