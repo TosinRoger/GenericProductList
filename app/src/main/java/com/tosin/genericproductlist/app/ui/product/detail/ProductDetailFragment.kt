@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.tosin.genericproductlist.R
 import com.tosin.genericproductlist.data.dataStore
 import com.tosin.genericproductlist.data.database.datasource.DoQueriesToLoadProduct
@@ -69,6 +70,17 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
         product?.let {
             _binding?.textViewProductDetailName?.text = it.title
             _binding?.textViewProductDetailBrand?.text = it.brand
+            _binding?.textViewtextViewProductDetailDescription?.text = it.description
+
+            _binding?.textViewProductDetailRating?.text = it.rating.toString()
+            _binding?.textViewProductDetailDiscount?.text = "${it.discountPercentage}%"
+            _binding?.textViewProductDetailPrice?.text = "$ ${it.price}"
+
+            Glide
+                .with(requireContext())
+                .load(it.images.first())
+                .error(R.drawable.baseline_cloud_off_24)
+                .into(binding.imageProductDetail)
         }
     }
 }

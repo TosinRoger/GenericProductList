@@ -46,6 +46,7 @@ ext {
     pagingVersion = '3.1.1'
     slidingPaneLayoutVersion = '1.2.0'
     retrofitVersion = '2.9.0'
+    glideVersion = '4.14.2'
 
     // Architecture Components
     navigationVersion = '2.5.3'
