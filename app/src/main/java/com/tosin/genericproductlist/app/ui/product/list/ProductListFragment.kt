@@ -140,8 +140,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
         override fun invoke(itemClicked: Product) {
             lifecycleScope.launch {
                 requireContext().dataStore.edit { settings ->
-                    val currentCounterValue = settings[ProductDetailFragment.SAVE_PRODUCT_ID] ?: 0
-                    settings[ProductDetailFragment.SAVE_PRODUCT_ID] = currentCounterValue + 1
+                    settings[ProductDetailFragment.SAVE_PRODUCT_ID] = itemClicked.id
                 }
                 _binding?.slidingPaneLayout?.openPane()
             }

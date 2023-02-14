@@ -44,12 +44,8 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val productId = arguments?.getInt(PRODUCT_ID) ?: 1
-//        loadProduct(productId)
-
         val productIdUpdateFlow: Flow<Int> = requireContext().dataStore.data
             .map { preferences ->
-                // No type safety.
                 val productId = preferences[SAVE_PRODUCT_ID] ?: 0
                 productId
             }
@@ -61,6 +57,9 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
         }
     }
 
+    /**
+     * Called in fragment only to test pass [PRODUCT_ID] by data store
+     */
     private fun loadProduct(productId: Int) {
         val productRepository = ProductRepository(
             DoQueriesToLoadProduct()
