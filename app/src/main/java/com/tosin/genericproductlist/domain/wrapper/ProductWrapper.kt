@@ -24,7 +24,7 @@ class ProductWrapper : WrapperUI, WrapperSync {
             productLocal.brand,
             productLocal.category,
             productLocal.thumbnail,
-            productLocal.images
+            listOf()
         )
     }
 
@@ -40,8 +40,7 @@ class ProductWrapper : WrapperUI, WrapperSync {
             productUi.stock,
             productUi.brand,
             productUi.category,
-            productUi.thumbnail,
-            productUi.images
+            productUi.thumbnail
         )
     }
 
@@ -58,7 +57,7 @@ class ProductWrapper : WrapperUI, WrapperSync {
             productLocal.brand,
             productLocal.category,
             productLocal.thumbnail,
-            productLocal.images
+            listOf()
         )
     }
 
@@ -74,8 +73,7 @@ class ProductWrapper : WrapperUI, WrapperSync {
             productRemote.stock,
             productRemote.brand,
             productRemote.category,
-            productRemote.thumbnail,
-            productRemote.images
+            productRemote.thumbnail
         )
     }
 }

@@ -6,34 +6,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.datastore.preferences.core.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
+import com.tosin.genericproductlist.AppApplication
 import com.tosin.genericproductlist.R
 import com.tosin.genericproductlist.app.delegate.onItemClicked
 import com.tosin.genericproductlist.app.ui.interfaces.ImplementMethodsOnScreen
-import com.tosin.genericproductlist.app.ui.product.detail.ProductDetailFragment
 import com.tosin.genericproductlist.app.ui.product.list.adapter.ProductListAdapter
 import com.tosin.genericproductlist.app.ui.state.UiProductState
 import com.tosin.genericproductlist.app.ui.state.UiState
 import com.tosin.genericproductlist.app.ui.viewModelFactory
-import com.tosin.genericproductlist.data.dataStore
-import com.tosin.genericproductlist.data.database.datasource.DoQueriesToLoadProduct
+import com.tosin.genericproductlist.data.datastore.SettingsDataStore
+import com.tosin.genericproductlist.data.datastore.dataStore
 import com.tosin.genericproductlist.databinding.FragmentProductListBinding
 import com.tosin.genericproductlist.domain.data.ProductRepository
 import com.tosin.genericproductlist.domain.model.Product
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementMethodsOnScreen {
@@ -43,7 +38,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
 
     private lateinit var viewModel: ProductListViewModel
     private lateinit var mAdapter: ProductListAdapter
-    private var job: Job? = null
+    private lateinit var layoutDataStore: SettingsDataStore
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,16 +55,18 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
         setUpView()
 //        setUpMenu()
         setUpObserverViewModel()
-        setUpJob()
+
+        viewModel.loadList()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        job?.cancel()
     }
 
     override fun setUpView() {
+        layoutDataStore = SettingsDataStore(requireContext().dataStore)
+
         val slidingPaneLayout = binding.slidingPaneLayout
 //        slidingPaneLayout.lockMode = SlidingPaneLayout.LOCK_MODE_LOCKED
         // Connect the SlidingPaneLayout to the system back button.
@@ -81,22 +78,6 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
 
         mAdapter = ProductListAdapter(delegate)
 
-        mAdapter.addLoadStateListener { loadState ->
-            // Only show the list if refresh succeeds.
-            val showList = loadState.source.refresh is LoadState.NotLoading
-            // Show loading spinner during initial load or refresh.
-            val showLoading = loadState.source.refresh is LoadState.Loading
-
-            // here only hide loading. The show is in launch search/load
-            if (showLoading) {
-                showUiState(UiProductState(UiState.LOADING))
-            } else if (showList && mAdapter.itemCount == 0) {
-                showUiState(UiProductState(UiState.EMPTY_LIST))
-            } else if (showList && mAdapter.itemCount > 0) {
-                showUiState(UiProductState(UiState.DONE))
-            }
-        }
-
         val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
 
         _binding?.recyclerViewProductList?.apply {
@@ -104,10 +85,6 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mAdapter
             addItemDecoration(dividerItemDecoration)
-        }
-
-        _binding?.refreshProductList?.setOnRefreshListener {
-            setUpJob()
         }
     }
 
@@ -121,7 +98,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
             viewModelFactory {
                 ProductListViewModel(
                     ProductRepository(
-                        DoQueriesToLoadProduct()
+                        (requireActivity().application as AppApplication).database.productDao()
                     )
                 )
             }
@@ -134,36 +111,20 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list), ImplementM
                 }
             }
         }
+
+        viewModel.productList.observe(viewLifecycleOwner) {
+            mAdapter.submitList(it)
+        }
     }
 
     private val delegate = object : onItemClicked<Product> {
         override fun invoke(itemClicked: Product) {
             lifecycleScope.launch {
-                requireContext().dataStore.edit { settings ->
-                    settings[ProductDetailFragment.SAVE_PRODUCT_ID] = itemClicked.id
-                }
+                layoutDataStore.saveProductIdClickedToPreferencesStore(
+                    itemClicked.id,
+                    requireContext()
+                )
                 _binding?.slidingPaneLayout?.openPane()
-            }
-        }
-    }
-
-    private fun setUpJob() {
-        job?.cancel()
-        job = lifecycleScope.launch {
-            viewModel.loadProducts().collectLatest {
-                mAdapter.submitData(it)
-            }
-        }
-
-        // Scroll to top when the list is refreshed.
-        lifecycleScope.launch {
-            if (::mAdapter.isInitialized) {
-                mAdapter.loadStateFlow
-                    // Only emit when REFRESH LoadState for RemoteMediator changes.
-                    .distinctUntilChangedBy { it.refresh }
-                    // Only react to cases where Remote REFRESH completes i.e., NotLoading.
-                    .filter { it.refresh is LoadState.NotLoading }
-                    .collect { _binding?.recyclerViewProductList?.scrollToPosition(0) }
             }
         }
     }

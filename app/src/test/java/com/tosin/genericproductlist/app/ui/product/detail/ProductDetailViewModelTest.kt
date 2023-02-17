@@ -1,4 +1,4 @@
-package com.tosin.genericproductlist.app.ui.product.list
+package com.tosin.genericproductlist.app.ui.product.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.tosin.genericproductlist.MainCoroutineRule
@@ -13,16 +13,16 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.AfterEach
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import kotlin.test.assertEquals
 
 @RunWith(JUnit4::class)
-class ProductListViewModelTest {
+class ProductDetailViewModelTest {
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
@@ -31,7 +31,7 @@ class ProductListViewModelTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var viewModel: ProductListViewModel
+    private lateinit var viewModel: ProductDetailViewModel
 
     @MockK
     private lateinit var repository: ProductRepository
@@ -40,7 +40,7 @@ class ProductListViewModelTest {
     fun setUp() {
         MockKAnnotations.init(this)
 
-        viewModel = ProductListViewModel(repository)
+        viewModel = ProductDetailViewModel(repository)
     }
 
     @AfterEach
@@ -50,40 +50,24 @@ class ProductListViewModelTest {
     }
 
     @Test
-    fun `load empty list`() = runBlocking {
-        // GIVEN
-        val responseList = listOf<Product>()
-
-        stubPagingList(responseList)
-
-        // WHEN
-        viewModel.loadList()
-
-        // THEN
-        val response = viewModel.productList.getOrAwaitValue()
-
-        assertEquals(responseList, response)
-    }
-
-    @Test
-    fun `load list with some product`() = runBlocking {
+    fun `load product by ID`() = runBlocking {
         // GIVEN
         val product = ProductFactory.makeProduct()
-        val responseList = listOf(product)
 
-        stubPagingList(responseList)
+        stubProduct(product)
 
         // WHEN
-        viewModel.loadList()
+        viewModel.loadProductById(product.id)
 
         // THEN
-        val response = viewModel.productList.getOrAwaitValue()
-        assertEquals(responseList, response)
+        val response = viewModel.product.getOrAwaitValue()
+
+        assertEquals(product, response)
     }
 
-    private fun stubPagingList(responseList: List<Product>) {
+    private fun stubProduct(product: Product) {
         coEvery {
-            repository.getAllProduct()
-        } returns responseList
+            repository.findById(any())
+        } returns product
     }
 }

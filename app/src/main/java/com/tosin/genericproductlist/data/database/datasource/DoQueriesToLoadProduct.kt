@@ -2,19 +2,18 @@ package com.tosin.genericproductlist.data.database.datasource
 
 import com.tosin.genericproductlist.AppApplication
 import com.tosin.genericproductlist.data.database.entity.ProductLocal
-import com.tosin.genericproductlist.data.database.interfaces.ProductDao
 import com.tosin.genericproductlist.data.utils.ProviderStaticList
 
-class DoQueriesToLoadProduct : ProductDao {
+class DoQueriesToLoadProduct {
 
     companion object {
-        private const val PAGE_ONE = 0
+        const val PAGE_ONE = 0
         private const val PAGE_TWO = 1
         private const val PAGE_THREE = 2
-        private const val PAGE_FOUR = 3
+        const val PAGE_FOUR = 3
     }
 
-    override fun fetchProduct(page: Int): List<ProductLocal> {
+    fun fetchProduct(page: Int): List<ProductLocal> {
         return when (page) {
             PAGE_ONE -> ProviderStaticList.getList(
                 AppApplication.applicationContext(),
@@ -34,23 +33,5 @@ class DoQueriesToLoadProduct : ProductDao {
             )
             else -> listOf()
         }
-    }
-
-    override fun findById(productId: Int): ProductLocal? {
-        val products = mutableListOf<ProductLocal>()
-        for (index in PAGE_ONE..PAGE_FOUR) {
-            val aux = fetchProduct(index)
-            products.addAll(aux)
-        }
-
-        var product: ProductLocal? = null
-
-        products.forEach { productLocal ->
-            if (productId == productLocal.id) {
-                product = productLocal
-            }
-        }
-
-        return product
     }
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Generic Product List</string>
+    <string name="discount_placeholder">%1$.02f %%</string>
+    <string name="price_placeholder">$ %d</string>
 </resources>
