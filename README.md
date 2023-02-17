@@ -18,10 +18,10 @@ A ideia inicial é ter uma lista de produtos, seja vinda de um JSON remoto ou ad
 
 # Tecnologias que devem ser usada:
 - [ ] Paging -> para lista pagina no RecyclerView
-- [ ] Room -> para banco de dados
+- [x] Room -> para banco de dados
 - [ ] LiveData -> para notificação da alteração dos dados
 - [ ] Teste de unidade -> teste automatizado para garantir regra de negócio, apresentação dos dados, etc;
-- [ ] Navigation -> para gerenciar a transição de Fragments;
+- [x] Navigation -> para gerenciar a transição de Fragments;
 - [ ] Coroutines -> para gerenciamento de thread;
 
 # Tecnologia que podem ser estudadas:
