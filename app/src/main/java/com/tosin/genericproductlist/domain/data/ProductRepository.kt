@@ -48,8 +48,7 @@ class ProductRepository(private val database: ProductDao) {
     }
 
     suspend fun getAllProduct(productList: MutableLiveData<List<Product>>) = withContext(IO) {
-        val churros = database.getAllProducts()
-        churros.collectLatest {
+        database.getAllProducts().collectLatest {
             val wrapper = ProductWrapper()
 
             val responseProductList = mutableListOf<Product>()
