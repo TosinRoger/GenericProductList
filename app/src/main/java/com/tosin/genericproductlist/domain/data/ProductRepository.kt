@@ -1,5 +1,6 @@
 package com.tosin.genericproductlist.domain.data
 
+import androidx.lifecycle.MutableLiveData
 import com.tosin.genericproductlist.AppApplication
 import com.tosin.genericproductlist.data.database.entity.ProductLocal
 import com.tosin.genericproductlist.data.database.interfaces.ProductDao
@@ -7,6 +8,7 @@ import com.tosin.genericproductlist.data.utils.ProviderStaticList
 import com.tosin.genericproductlist.domain.model.Product
 import com.tosin.genericproductlist.domain.wrapper.ProductWrapper
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.withContext
 
 class ProductRepository(private val database: ProductDao) {
@@ -45,17 +47,19 @@ class ProductRepository(private val database: ProductDao) {
         return productLocalList
     }
 
-    suspend fun getAllProduct(): List<Product> = withContext(IO) {
-        val wrapper = ProductWrapper()
-        val productLocalList = database.getAllProducts()
-        val responseProductList = mutableListOf<Product>()
+    suspend fun getAllProduct(productList: MutableLiveData<List<Product>>) = withContext(IO) {
+        val churros = database.getAllProducts()
+        churros.collectLatest {
+            val wrapper = ProductWrapper()
 
-        productLocalList.map { productLocal ->
-            val product = wrapper.toUi(productLocal) as Product
-            responseProductList.add(product)
+            val responseProductList = mutableListOf<Product>()
+
+            it.map { productLocal ->
+                val product = wrapper.toUi(productLocal) as Product
+                responseProductList.add(product)
+            }
+            productList.postValue(responseProductList)
         }
-
-        return@withContext responseProductList
     }
 
     fun findById(productId: Int): Product? {
@@ -67,5 +71,11 @@ class ProductRepository(private val database: ProductDao) {
         } else {
             null
         }
+    }
+
+    fun updateProduct(product: Product) {
+        val wrapper = ProductWrapper()
+        val productLocal = wrapper.toLocal(product) as ProductLocal
+        database.updateProduct(productLocal)
     }
 }

@@ -9,7 +9,7 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_productList"
-        android:layout_width="550dp"
+        android:layout_width="500dp"
         android:layout_height="match_parent"
         android:paddingBottom="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

@@ -31,7 +31,6 @@ class ProductListViewModel(private val repository: ProductRepository) : ViewMode
     }
 
     fun loadList() = uiScope.launch {
-        val allProduct = repository.getAllProduct()
-        _productList.postValue(allProduct)
+        repository.getAllProduct(_productList)
     }
 }
